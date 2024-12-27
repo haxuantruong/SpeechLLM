@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     model_config = {
                 'audio_enc_dim': 1024, 
-                'llm_dim': 2048, 
+                'llm_dim': 512, 
                 'audio_encoder_name': "microsoft/wavlm-large", 
                 'connector_name': 'cnn',
                 'llm_name': "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
@@ -25,11 +25,11 @@ if __name__ == "__main__":
                 'connector_k': 2,
                 'use_lora': True,
                 'lora_r': 8,
-                'lora_alpha': 16,
+                'lora_alpha': 32,
                 'max_lr': 1e-4,
                 'total_training_step': 10000000,
                 'warmup_steps': 100,
-                'train_batch_per_epoch': 10000,
+                'train_batch_per_epoch': 5000,
                 'grad_accumulate_steps': 8
         }   
     
