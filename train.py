@@ -37,13 +37,13 @@ if __name__ == "__main__":
     tokenizer = model.llm_tokenizer
 
     train_dataset = InstructionalAudioDataset(
-        csv_file = './data_samples/train.csv',
+        csv_file = '/kaggle/input/train-dataset/train.csv',
         mode='train', 
         random_keys_prob=0.2,
         )
 
     val_dataset = InstructionalAudioDataset(
-        csv_file='./data_samples/dev.csv', 
+        csv_file='/kaggle/input/train-dataset/dev.csv', 
         mode='test'
         )
 
