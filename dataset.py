@@ -50,7 +50,7 @@ class AudioDataset(Dataset):
     def __getitem__(self, idx):
         # Load audio
         audio_row = self.data_frame.iloc[idx]
-        audio_path = audio_row['audio_path']
+        audio_path = audio_row['path']
         if pd.isna(audio_path):
             waveform = None
         else:
