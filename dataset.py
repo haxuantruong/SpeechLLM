@@ -7,6 +7,7 @@ import torchaudio
 import pandas as pd
 import random
 import numpy as np
+import os
 
 class MyCollator:
     def __init__(self, audio_encoder_name, tokenizer):
@@ -41,7 +42,7 @@ class AudioDataset(Dataset):
         self.data_frame = self.data_frame.sample(frac=1, random_state=42).reset_index(drop=True)
         self.mode = mode
         self.random_keys_prob = random_keys_prob
-        self.labels = ['isspeech', 'transcript', 'gender', 'emotion', 'age', 'accent']
+        self.labels = ['transcript', 'gender', 'emotion', 'age', 'dialect']
         
     def __len__(self):
         return len(self.data_frame)
@@ -53,7 +54,7 @@ class AudioDataset(Dataset):
         if pd.isna(audio_path):
             waveform = None
         else:
-            waveform, sample_rate = torchaudio.load(audio_path)
+            waveform, sample_rate = torchaudio.load(os.path.join("/kaggle/input/train-dataset/data",audio_path))
 
         # Prepare labels dictionary based on mode and probability
         labels_str = {}
@@ -168,7 +169,7 @@ class InstructionalAudioDataset(AudioDataset):
 
         pre_speech_prompt = f"Instruction:\n{instruction_phrase} - ["
         pre_speech_prompt += ', '.join(['IsSpeech' if k == 'isSpeech' else k for k in labels_str.keys()]) + "]\n\nInput:\n<speech>"
-        pre_speech_prompt = pre_speech_prompt.replace("Isspeech", "SpeechActivity")
+        #pre_speech_prompt = pre_speech_prompt.replace("Isspeech", "SpeechActivity")
         post_speech_prompt = f"</speech>\n\n" + \
              "Output:\n"
         output_prompt = "{"
