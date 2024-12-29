@@ -9,8 +9,8 @@ from dataset import InstructionalAudioDataset, MyCollator
 if __name__ == "__main__":
     
     model_config = {
-                'audio_enc_dim': 1024, 
-                'llm_dim': 2048, 
+                'audio_enc_dim': 512, 
+                'llm_dim': 1024, 
                 'audio_encoder_name': "microsoft/wavlm-large", #"facebook/hubert-xlarge-ll60k",
                 'connector_name': 'cnn',
                 'llm_name': "TinyLlama/TinyLlama-1.1B-Chat-v1.0", #"google/gemma-2b-it", #"TinyLlama/TinyLlama-1.1B-Chat-v1.0", #"microsoft/phi-2", 
@@ -20,10 +20,10 @@ if __name__ == "__main__":
                 'lora_r': 8,
                 'lora_alpha': 16,
                 'max_lr': 3e-4,
-                'total_training_step': 1000000,
+                'total_training_step': 500000,
                 'warmup_steps': 100,
-                'train_batch_per_epoch': 10000,
-                'grad_accumulate_steps': 8
+                'train_batch_per_epoch': 2000,
+                'grad_accumulate_steps': 4
         }  
 
     model = SpeechLLMLightning.load_from_checkpoint("./path-to-checkpoint-dir/best_checkpoint.ckpt")
