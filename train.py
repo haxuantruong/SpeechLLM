@@ -25,7 +25,7 @@ if __name__ == "__main__":
                 'connector_k': 2,
                 'use_lora': True,
                 'lora_r': 8,
-                'lora_alpha': 32,
+                'lora_alpha': 16,
                 'max_lr': 1e-4,
                 'total_training_step': 10000000,
                 'warmup_steps': 100,
