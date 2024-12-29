@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     trainer = Trainer(
             max_epochs=model_config['total_training_step']//model_config['train_batch_per_epoch'], gpus=2, 
-            strategy= None #DDPStrategy(find_unused_parameters=True),
+            strategy=None, #DDPStrategy(find_unused_parameters=True),
             limit_train_batches=model_config['train_batch_per_epoch'], 
             limit_val_batches=model_config['train_batch_per_epoch'], 
             log_every_n_steps=model_config['train_batch_per_epoch'], 
