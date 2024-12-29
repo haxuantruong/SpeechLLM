@@ -52,23 +52,22 @@ class CNNConnector(nn.Module):
         super().__init__()
         self.layer = nn.Sequential(
             nn.ReLU(),
-            nn.Conv1d(in_channels, out_channels//2, kernel_size=5,
-                      stride=1, padding=0),
+            nn.Conv1d(in_channels, out_channels // 2, kernel_size=5, stride=1, padding=2),
             nn.ReLU(),
-            nn.Conv1d(out_channels//2, out_channels, kernel_size=5,
-                      stride=k, padding=0),
+            nn.Conv1d(out_channels // 2, out_channels, kernel_size=5, stride=k, padding=2),
             nn.ReLU(),
-            nn.Conv1d(out_channels, out_channels, kernel_size=5,
-                      stride=1, padding=0),
+            nn.Conv1d(out_channels, out_channels, kernel_size=5, stride=1, padding=2),
         )
 
     def forward(self, x):
-        return self.layer(x.transpose(1,2)).transpose(1,2)
+        # Đầu vào x: [B, T, in_channels]
+        return self.layer(x.transpose(1, 2)).transpose(1, 2)
 
 
 
 if __name__ == "__main__":
-    model = CNNConnector(128, 256, k = 2)
-    x = torch.randn(4, 50, 128)
-    z = model(x)
-    print(z.shape)
+    # Khởi tạo với audio_enc_dim=512, llm_dim=1024, stride k=2
+    cnn_connector = CNNConnector(512, 1024, k=2)
+    x = torch.randn(4, 50, 512)  # [batch_size, seq_len, in_channels]
+    z = cnn_connector(x)
+    print(z.shape)  # [B, T', out_channels], ví dụ: [4, 25, 1024] nếu T' giảm một nửa
