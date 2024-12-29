@@ -9,8 +9,8 @@ from dataset import InstructionalAudioDataset, MyCollator
 if __name__ == "__main__":
     
     model_config = {
-                'audio_enc_dim': 512, 
-                'llm_dim': 1024, 
+                'audio_enc_dim': 1024, 
+                'llm_dim': 2048, 
                 'audio_encoder_name': "microsoft/wavlm-large", #"facebook/hubert-xlarge-ll60k",
                 'connector_name': 'cnn',
                 'llm_name': "TinyLlama/TinyLlama-1.1B-Chat-v1.0", #"google/gemma-2b-it", #"TinyLlama/TinyLlama-1.1B-Chat-v1.0", #"microsoft/phi-2", 
