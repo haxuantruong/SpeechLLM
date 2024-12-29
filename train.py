@@ -82,7 +82,7 @@ if __name__ == "__main__":
         callbacks=[checkpoint_callback],
         fast_dev_run=False, 
         logger=logger,
-        precision=16,
+        precision='bf16',
         accumulate_grad_batches=model_config['grad_accumulate_steps'],
         resume_from_checkpoint=None
     )
