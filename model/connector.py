@@ -65,12 +65,12 @@ class CNNConnector(nn.Module):
 
     def forward(self, x):
         # Đầu vào x có kích thước [B, T, in_channels]
-        return self.layer(x.transpose(2, 1)).transpose(2, 1)
+        return self.layer(x.transpose(1, 2)).transpose(1, 2)
 
 
 
 if __name__ == "__main__":
-    cnn_connector = CNNConnector(512, 1024, k=2)  # Tham số: 512 kênh đầu vào, 1024 kênh đầu ra, stride k=2
+    cnn_connector = CNNConnector(512, 1024)  # Tham số: 512 kênh đầu vào, 1024 kênh đầu ra, stride k=2
     x = torch.randn(4, 50, 512)  # Kích thước [B, T, in_channels] = [4, 50, 512]
     z = cnn_connector(x)
     print(z.shape)  # Kết quả sẽ có kích thước [4, T', 1024] (T' phụ thuộc vào stride k)
