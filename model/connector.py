@@ -65,7 +65,7 @@ class CNNConnector(nn.Module):
 
     def forward(self, x):
         # Đầu vào x có kích thước [B, T, in_channels]
-        return self.layer(x.transpose(1, 2)).transpose(1, 2)
+        return self.layer(x.transpose(2, 1)).transpose(2, 1)
 
 
 
