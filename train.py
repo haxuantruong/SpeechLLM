@@ -27,10 +27,10 @@ if __name__ == "__main__":
                 'lora_r': 8,
                 'lora_alpha': 16,
                 'max_lr': 1e-4,
-                'total_training_step': 10000000,
+                'total_training_step': 5000000,
                 'warmup_steps': 100,
-                'train_batch_per_epoch': 5000,
-                'grad_accumulate_steps': 8
+                'train_batch_per_epoch': 2000,
+                'grad_accumulate_steps': 4
         }   
     
     model = SpeechLLMLightning(**model_config)
