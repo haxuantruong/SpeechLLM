@@ -16,8 +16,8 @@ if __name__ == "__main__":
     logger = WandbLogger(project="mmllm", name=log_path)
 
     model_config = {
-                'audio_enc_dim': 1024, 
-                'llm_dim': 2048, 
+                'audio_enc_dim': 512, 
+                'llm_dim': 1024, 
                 'audio_encoder_name': "microsoft/wavlm-large", 
                 'connector_name': 'cnn',
                 'llm_name': "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
