@@ -25,11 +25,11 @@ if __name__ == "__main__":
                 'connector_k': 2,
                 'use_lora': True,
                 'lora_r': 8,
-                'lora_alpha': 16,
+                'lora_alpha': 32,
                 'max_lr': 1e-4,
-                'total_training_step': 5000000,
+                'total_training_step': 10000000,
                 'warmup_steps': 100,
-                'train_batch_per_epoch': 2000,
+                'train_batch_per_epoch': 10000,
                 'grad_accumulate_steps': 4
         }   
     
@@ -58,13 +58,14 @@ if __name__ == "__main__":
 
     trainer = Trainer(
             max_epochs=model_config['total_training_step']//model_config['train_batch_per_epoch'], gpus=2, 
-            strategy=DDPStrategy(find_unused_parameters=True),
+            strategy= None #DDPStrategy(find_unused_parameters=True),
             limit_train_batches=model_config['train_batch_per_epoch'], 
             limit_val_batches=model_config['train_batch_per_epoch'], 
             log_every_n_steps=model_config['train_batch_per_epoch'], 
             enable_checkpointing=True, 
             callbacks=[checkpoint_callback],
-            fast_dev_run=False, logger=logger, 
+            fast_dev_run=False, logger=logger,
+            precision=16,
             accumulate_grad_batches=model_config['grad_accumulate_steps'],
             resume_from_checkpoint=None
     )
