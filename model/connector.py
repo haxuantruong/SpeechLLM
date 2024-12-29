@@ -68,7 +68,7 @@ class CNNConnector(nn.Module):
 
 
 if __name__ == "__main__":
-    model = CNNConnector(128, 256)
+    model = CNNConnector(128, 256, k = 2)
     x = torch.randn(4, 50, 128)
     z = model(x)
     print(z.shape)
