@@ -30,7 +30,7 @@ if __name__ == "__main__":
     tokenizer = model.llm_tokenizer
 
     test_dataset = InstructionalAudioDataset(
-        csv_file='./path-to-test-dir/librispeech-test-clean.csv', # same train.csv and dev.csv
+        csv_file='/kaggle/input/train-dataset/test.csv', # same train.csv and dev.csv
         mode='test'
         )
     
