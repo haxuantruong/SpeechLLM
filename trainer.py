@@ -19,7 +19,7 @@ from model.llm import get_llm
 class SpeechLLMLightning(pl.LightningModule):
     def __init__(self, 
                  audio_enc_dim=512, 
-                 llm_dim=2048, 
+                 llm_dim=1024, 
                  audio_encoder_name="speech-tokenizer",
                  connector_name='linear-pool',
                  llm_name="TinyLlama/TinyLlama-1.1B-Chat-v1.0", 
@@ -153,9 +153,9 @@ class SpeechLLMLightning(pl.LightningModule):
                 predicted_age = extracted_pred['Age']
                 self.log("val/age", float(target_age.lower()==predicted_age.lower()), on_step=False, on_epoch=True, prog_bar=True, logger=True)
 
-            if 'Accent' in keys:
-                target_accent = extracted_target['Accent']
-                predicted_accent = extracted_pred['Accent']
+            if 'Dialect' in keys:
+                target_accent = extracted_target['Dialect']
+                predicted_accent = extracted_pred['Dialect']
                 self.log("val/accent", float(target_accent.lower()==predicted_accent.lower()), on_step=False, on_epoch=True, prog_bar=True, logger=True)
 
             if batch_idx in self.selected_samples_for_logging:
