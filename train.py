@@ -56,18 +56,35 @@ if __name__ == "__main__":
     checkpoint_callback = ModelCheckpoint(dirpath=f"checkpoints", filename=log_path+'-{epoch}', save_top_k=1, monitor="val/loss", save_last=True)
     early_stop_callback = EarlyStopping(monitor="val/loss", min_delta=0.00, patience=10, verbose=False, mode="min")
 
+    # trainer = Trainer(
+    #         max_epochs=model_config['total_training_step']//model_config['train_batch_per_epoch'], gpus=2, 
+    #         strategy=None, #DDPStrategy(find_unused_parameters=True),
+    #         limit_train_batches=model_config['train_batch_per_epoch'], 
+    #         limit_val_batches=model_config['train_batch_per_epoch'], 
+    #         log_every_n_steps=model_config['train_batch_per_epoch'], 
+    #         enable_checkpointing=True, 
+    #         callbacks=[checkpoint_callback],
+    #         fast_dev_run=False, logger=logger,
+    #         precision=16,
+    #         accumulate_grad_batches=model_config['grad_accumulate_steps'],
+    #         resume_from_checkpoint=None
+    # )
+    #from pytorch_lightning.strategies import DDPStrategy
+
     trainer = Trainer(
-            max_epochs=model_config['total_training_step']//model_config['train_batch_per_epoch'], gpus=2, 
-            strategy=None, #DDPStrategy(find_unused_parameters=True),
-            limit_train_batches=model_config['train_batch_per_epoch'], 
-            limit_val_batches=model_config['train_batch_per_epoch'], 
-            log_every_n_steps=model_config['train_batch_per_epoch'], 
-            enable_checkpointing=True, 
-            callbacks=[checkpoint_callback],
-            fast_dev_run=False, logger=logger,
-            precision=16,
-            accumulate_grad_batches=model_config['grad_accumulate_steps'],
-            resume_from_checkpoint=None
+        max_epochs=model_config['total_training_step']//model_config['train_batch_per_epoch'], 
+        gpus=2, 
+        strategy=DDPStrategy(find_unused_parameters=True),  # Ensure unused params are handled
+        limit_train_batches=model_config['train_batch_per_epoch'], 
+        limit_val_batches=model_config['train_batch_per_epoch'], 
+        log_every_n_steps=model_config['train_batch_per_epoch'], 
+        enable_checkpointing=True, 
+        callbacks=[checkpoint_callback],
+        fast_dev_run=False, 
+        logger=logger,
+        precision=16,
+        accumulate_grad_batches=model_config['grad_accumulate_steps'],
+        resume_from_checkpoint=None
     )
     trainer.fit(model, train_loader, val_loader)
 
