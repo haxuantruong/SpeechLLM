@@ -18,8 +18,8 @@ from model.llm import get_llm
 
 class SpeechLLMLightning(pl.LightningModule):
     def __init__(self, 
-                 audio_enc_dim=512, 
-                 llm_dim=1024, 
+                 audio_enc_dim=1024, 
+                 llm_dim=512, 
                  audio_encoder_name="speech-tokenizer",
                  connector_name='linear-pool',
                  llm_name="TinyLlama/TinyLlama-1.1B-Chat-v1.0", 
