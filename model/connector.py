@@ -50,24 +50,27 @@ class LinearPoolConnector(nn.Module):
 class CNNConnector(nn.Module):
     def __init__(self, in_channels, out_channels, k):
         super().__init__()
+        # Chỉnh lại số lượng kênh cho các lớp Conv1d
         self.layer = nn.Sequential(
             nn.ReLU(),
+            # Lớp Conv1d đầu tiên
             nn.Conv1d(in_channels, out_channels // 2, kernel_size=5, stride=1, padding=2),
             nn.ReLU(),
+            # Lớp Conv1d thứ hai, số kênh đầu vào là out_channels//2
             nn.Conv1d(out_channels // 2, out_channels, kernel_size=5, stride=k, padding=2),
             nn.ReLU(),
+            # Lớp Conv1d thứ ba
             nn.Conv1d(out_channels, out_channels, kernel_size=5, stride=1, padding=2),
         )
 
     def forward(self, x):
-        # Đầu vào x: [B, T, in_channels]
+        # Đầu vào x có kích thước [B, T, in_channels]
         return self.layer(x.transpose(1, 2)).transpose(1, 2)
 
 
 
 if __name__ == "__main__":
-    # Khởi tạo với audio_enc_dim=512, llm_dim=1024, stride k=2
-    cnn_connector = CNNConnector(512, 1024, k=2)
-    x = torch.randn(4, 50, 512)  # [batch_size, seq_len, in_channels]
+    cnn_connector = CNNConnector(512, 1024, k=2)  # Tham số: 512 kênh đầu vào, 1024 kênh đầu ra, stride k=2
+    x = torch.randn(4, 50, 512)  # Kích thước [B, T, in_channels] = [4, 50, 512]
     z = cnn_connector(x)
-    print(z.shape)  # [B, T', out_channels], ví dụ: [4, 25, 1024] nếu T' giảm một nửa
+    print(z.shape)  # Kết quả sẽ có kích thước [4, T', 1024] (T' phụ thuộc vào stride k)
